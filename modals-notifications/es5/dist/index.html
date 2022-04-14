@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta name="format-detection" content="telephone=no">
+	<title>Modal&Notification</title>
+
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="css/style.css">
+
+	<script defer src="js/config.js"></script>
+	<script defer src="js/component.js"></script>
+	<script defer src="js/notification.js"></script>
+	<script defer src="js/modal.js"></script>
+	<script defer src="js/app.js"></script>
+</head>
+<body>
+<div id="app" class="app">
+	<div class="container">
+		<div class="app__wrap">
+			<span class="btn-style btn-style_blue notificationOpenJS" data-type="success">Success</span>
+			<span class="btn-style btn-style_blue notificationOpenJS" data-type="warning">Warning</span>
+			<span class="btn-style btn-style_blue notificationOpenJS" data-type="error">Error</span>
+			<span class="btn-style btn-style_blue notificationOpenJS" data-type="info">Info</span>
+			<a href="modal" class="btn-style btn-style_white modalOpenJS">Modal</a>
+		</div>
+	</div>
+	<div class="notification notificationsJS"></div>
+	<div class="modal-container"><div class="modal modalJs"></div></div>
+</div>
+</body>
+</html>
+

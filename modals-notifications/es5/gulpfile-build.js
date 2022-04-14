@@ -2,7 +2,6 @@ var gulp = require('gulp'),
 	cleancss = require('gulp-clean-css');
 
 
-
 gulp.task('html-build', function (done) {
 	gulp.src('./src/*.html').pipe(gulp.dest('./dist/'));
 	done();
@@ -25,28 +24,4 @@ gulp.task('js-build', function (done) {
 });
 
 
-
 gulp.task('default', gulp.series('html-build', 'css-build', 'img-build', 'js-build',  'fonts-build'));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
