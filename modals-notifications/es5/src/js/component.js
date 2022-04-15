@@ -9,5 +9,5 @@ Component.prototype.show = function () {
 }
 
 Component.prototype.hide = function (elem) {
-	elem && elem.parentElement.remove();
+	elem.parentElement.remove();
 }
