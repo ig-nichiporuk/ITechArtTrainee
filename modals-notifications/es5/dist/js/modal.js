@@ -20,12 +20,12 @@ Modal.prototype.constructor = Modal;
 Modal.prototype.show = function () {
 	Component.prototype.show.apply(this, arguments);
 
-	const winScrollTop = window.scrollY,
+	var winScrollTop = window.scrollY,
 		winHeight = document.documentElement.clientHeight;
 
 	this.parent.insertAdjacentHTML('beforebegin', '<div class="overlay overlayJS"></div>');
 
-	let modalHeight = this.parent.clientHeight,
+	var modalHeight = this.parent.clientHeight,
 		modalTop = winScrollTop + (winHeight - modalHeight) / 2;
 
 	document.body.classList.add('modal-open');
@@ -36,7 +36,7 @@ Modal.prototype.show = function () {
 Modal.prototype.hide = function (elem) {
 	elem ? Component.prototype.hide.apply(this, arguments) : this.parent.innerHTML = '';
 
-	const overlay = document.body.getElementsByClassName('overlayJS')[0];
+	var overlay = document.body.getElementsByClassName('overlayJS')[0];
 
 	if (overlay) overlay.remove();
 
