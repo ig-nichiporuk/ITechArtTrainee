@@ -38,7 +38,7 @@ Modal.prototype.hide = function (elem) {
 
 	var overlay = document.body.getElementsByClassName('overlayJS')[0];
 
-	if (overlay) overlay.remove();
+	overlay && overlay.remove();
 
 	document.body.classList.remove('modal-open');
 };

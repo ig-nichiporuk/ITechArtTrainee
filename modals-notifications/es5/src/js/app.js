@@ -13,13 +13,9 @@ app.addEventListener('click', function (e) {
 		modalInfo.show();
 	}
 
-	if (target.classList.contains('modalCloseJS')) {
-		modalInfo.hide(target);
-	}
+	target.classList.contains('modalCloseJS') && modalInfo.hide(target);
 
-	if (target.classList.contains('overlayJS')) {
-		modalInfo.hide();
-	}
+	target.classList.contains('overlayJS') && modalInfo.hide();
 
 	if (target.classList.contains('notificationOpenJS')) {
 		var notificationType = notificationsConfig.find(function (item) {
@@ -31,7 +27,5 @@ app.addEventListener('click', function (e) {
 		notification.show();
 	}
 
-	if (target.classList.contains('notificationCloseJS')) {
-		notification.hide(target);
-	}
+	target.classList.contains('notificationCloseJS') && notification.hide(target);
 });
