@@ -1,0 +1,139 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    min-width: 320px;
+    color: #000;
+    background: #F0F0F0;
+
+    &.modal-open {
+        position: fixed;
+        width: 100%;
+        overflow: hidden;
+    }
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, button, input, textarea html, legend, li, ol, td, th, figure {
+    margin: 0;
+    padding: 0;
+}
+
+a, a:active, a:focus {
+    text-decoration: none;
+    color: inherit;
+    outline: 0
+}
+
+*, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.overlay {
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(23, 35, 69, .55);
+}
+
+.modal-open .overlay{
+    display: block;
+}
+
+.container {
+    padding: 0 20px;
+    width: 1540px;
+    margin: 0 auto;
+}
+
+.btn-style {
+    display: block;
+    width: 100%;
+    border-radius: 6px;
+    padding: 0 16px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 40px;
+    font-weight: 500;
+    letter-spacing: 0.1px;
+    color: #fff;
+    cursor: pointer;
+    &_blue {
+        background-color: #32325D;
+        &:hover, &:active {
+            background-color: #2B2B9F;
+        }
+    }
+    &_gray {
+        background-color: #e1e1e1;
+        color: #32325D;
+        &:hover, &:active {
+            background-color: #dbdbdb;
+        }
+    }
+    &_white {
+        box-shadow: inset 0 0 0 2px #172345;
+        background-color: #fff;
+        color: #172345;
+        &:hover, &:active {
+            box-shadow: inset 0 0 0 2px #2B2B9F;
+            color: #2B2B9F;
+        }
+    }
+}
+
+@media (max-width: 1539px) {
+    .container {
+        width: 1300px;
+    }
+}
+
+@media (max-width: 1299px) {
+    .container {
+        width: 960px;
+    }
+}
+
+@media (max-width: 959px) {
+    .container {
+        width: 780px;
+    }
+}
+
+@media (max-width: 779px) {
+    .container {
+        width: 100%;
+        padding: 0 16px;
+    }
+}
+
+@media(max-width: 639px) {
+    .modal {
+        width: calc(100% - 32px);
+        &__body {
+            padding: 40px 30px;
+        }
+    }
+}
+
+@media (max-width: 479px) {
+    .modal {
+        &__body {
+            padding: 40px 25px;
+        }
+        &__close {
+            top: 15px;
+        }
+    }
+}
+
