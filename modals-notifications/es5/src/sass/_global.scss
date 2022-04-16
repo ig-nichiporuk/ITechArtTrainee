@@ -8,12 +8,6 @@ body {
     min-width: 320px;
     color: #000;
     background: #F0F0F0;
-
-    &.modal-open {
-        position: fixed;
-        width: 100%;
-        overflow: hidden;
-    }
 }
 
 h1, h2, h3, h4, h5, h6, p, ul, button, input, textarea html, legend, li, ol, td, th, figure {

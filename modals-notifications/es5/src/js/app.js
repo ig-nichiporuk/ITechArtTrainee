@@ -1,31 +1,46 @@
 var app = document.getElementById('app'),
-	modalInfo,
-	notification;
+	notificationWrap = document.querySelector('.notificationsJS'),
+	modalWrap = document.querySelector('.modalJs'),
+
+	errorConf = {type: 'error', title: 'Error', desc: 'Something is wrong', icon: 'error-icon'},
+	successConf = {type: 'success', title: 'Success', desc: 'Everything is fine', icon: 'success-icon'},
+	warningConf = {type: 'warning', title: 'Warning', desc: 'You must be careful', icon: 'warning-icon'},
+	infoConf = {type: 'info', title: 'Info', desc: 'Useful information for you', icon: 'info-icon'},
+
+	modalConf = {type: 'info', title: 'Info', desc: 'Useful information for you', icon: 'info-icon'},
+
+	errorNotification = new Notification(errorConf, notificationWrap),
+	successNotification = new Notification(successConf, notificationWrap),
+	warningNotification = new Notification(warningConf, notificationWrap),
+	infoNotification = new Notification(infoConf, notificationWrap),
+
+	modal = new Modal(modalConf, modalWrap);
+
 
 app.addEventListener('click', function (e) {
-	var target = e.target;
-
-	if (target.classList.contains('modalOpenJS')) {
+	if (e.target.classList.contains('modalOpenJS')) {
 		event.preventDefault();
 
-		modalInfo = new Modal(modalConfig[Math.floor(Math.random() * modalConfig.length)]);
-
-		modalInfo.show();
+		modal.show();
 	}
 
-	target.classList.contains('modalCloseJS') && modalInfo.hide(target);
-
-	target.classList.contains('overlayJS') && modalInfo.hide();
-
-	if (target.classList.contains('notificationOpenJS')) {
-		var notificationType = notificationsConfig.find(function (item) {
-			return item.type === target.dataset.type;
-		});
-
-		notification = new Notification(notificationType);
-
-		notification.show();
+	if (e.target.classList.contains('notificationOpenJS')) {
+		switch (e.target.dataset.type) {
+			case 'success':
+				successNotification.show();
+				break;
+			case 'warning':
+				warningNotification.show();
+				break;
+			case 'error':
+				errorNotification.show();
+				break;
+			case 'info':
+				infoNotification.show();
+				break;
+		}
 	}
-
-	target.classList.contains('notificationCloseJS') && notification.hide(target);
 });
+
+Notification.prototype.setActions();
+Modal.prototype.setActions();

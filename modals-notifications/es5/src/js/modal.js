@@ -1,46 +1,57 @@
-function Modal(conf) {
-	Component.apply(this, arguments);
-
-	this.parent = document.querySelector('.modalJs');
-	this.html = '' +
-		'<div class="modal__wrap">' +
-			'<div class="modal__main">' +
-				'<img class="modal__icon" src="img/' + this.icon + '.svg" alt="modal-icon">' +
-				'<span class="modal__title">' + this.title + '</span>' +
-				'<p class="modal__desc">' + this.desc + '</p>'  +
-			'</div>' +
-			'<span class="modal__close btn-style btn-style_gray modalCloseJS">Закрыть</span>' +
-		'</div>';
+function Modal(conf, parentBlock) {
+	Parent.prototype.constructor.apply(this, arguments);
 }
 
-Modal.prototype = Object.create(Component.prototype);
+extend (Modal, Parent);
 
-Modal.prototype.constructor = Modal;
+Modal.prototype = {
+	show: function () {
+		this.html = '' +
+			'<div class="overlay overlayJS"></div>' +
+			'<div class="modal modalWrapJS">' +
+				'<div class="modal__wrap">' +
+					'<div class="modal__main">' +
+						'<img class="modal__icon" src="img/' + this.icon + '.svg" alt="modal-icon">' +
+						'<span class="modal__title">' + this.title + '</span>' +
+						'<p class="modal__desc">' + this.desc + '</p>'  +
+					'</div>' +
+					'<span class="modal__close btn-style btn-style_gray modalCloseJS">Закрыть</span>' +
+				'</div>' +
+			'</div>';
 
-Modal.prototype.show = function () {
-	Component.prototype.show.apply(this, arguments);
+		Modal.superclass.show.apply(this);
 
-	var winScrollTop = window.scrollY,
-		winHeight = document.documentElement.clientHeight;
+		document.body.classList.add('modal-open');
+	},
 
-	this.parent.insertAdjacentHTML('beforebegin', '<div class="overlay overlayJS"></div>');
+	hide: function (elem) {
+		var overlay = document.body.getElementsByClassName('overlayJS')[0];
 
-	var modalHeight = this.parent.clientHeight,
-		modalTop = winScrollTop + (winHeight - modalHeight) / 2;
+		this.elem = elem;
 
-	document.body.classList.add('modal-open');
+		Modal.superclass.hide.apply(this);
 
-	this.parent.style.cssText = 'top :' + modalTop + 'px';
+		overlay.remove();
+
+		document.body.classList.remove('modal-open');
+	},
+
+	setActions: function () {
+		var modalWrap = document.querySelector('.modalJs');
+
+		modalWrap.addEventListener('click' , function (e) {
+			var target = e.target;
+
+			if (target.classList.contains('overlayJS') || target.classList.contains('modalCloseJS')) {
+
+				var modal = document.querySelector('.modalWrapJS');
+
+				this.hide(modal);
+			}
+		}.bind(this));
+	}
 };
 
-Modal.prototype.hide = function (elem) {
-	elem ? Component.prototype.hide.apply(this, arguments) : this.parent.innerHTML = '';
 
-	var overlay = document.body.getElementsByClassName('overlayJS')[0];
-
-	overlay && overlay.remove();
-
-	document.body.classList.remove('modal-open');
-};
 
 

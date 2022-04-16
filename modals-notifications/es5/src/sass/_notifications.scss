@@ -1,22 +1,22 @@
-.notification {
+.notifications {
     position: fixed;
     right: 24px;
     top: 24px;
     width: 260px;
-    & > div {
-        position: relative;
-        display: flex;
-        background-color: #fff;
-        border-radius: 6px;
-        padding: 16px 24px 16px 16px;
-        border: 1px solid #ddd;
-        animation-duration: .3s;
-        animation-name: notificationSlide;
-        & + div {
-            margin: 8px 0 0;
-        }
-    }
+}
 
+.notification {
+    position: relative;
+    display: flex;
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 16px 24px 16px 16px;
+    border: 1px solid #ddd;
+    animation-duration: .3s;
+    animation-name: notificationSlide;
+    & + & {
+        margin: 8px 0 0;
+    }
 
     &__icon {
         width: 30px;
