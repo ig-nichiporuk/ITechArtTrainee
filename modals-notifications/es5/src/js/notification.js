@@ -1,33 +1,14 @@
-function Notification(conf, parentBlock) {
-	Parent.prototype.constructor.apply(this, arguments);
+function Notification() {}
 
-	this.type = conf.type;
-	this.parent = parentBlock;
-}
-
-extend (Notification, Parent);
+extend(Notification, Parent);
 
 Notification.prototype = {
 	show: function () {
-		var timerID = setTimeout(function () {
-			var notifications = this.parent.querySelectorAll('.notificationJS');
-
-			notifications[notifications.length - 1].remove();
-		}.bind(this), 5000);
-
-		this.html = '' +
-			'<div class="notification notificationJS" data-timer-id="' + timerID +'">' +
-				'<div class="notification__icon">' +
-					'<img src="img/' + this.icon + '.svg" alt="icon">' +
-				'</div>' +
-				'<div class="notification__content">' +
-					'<span class="notification__title notification__title_' + this.type + '">' + this.title + '</span>' +
-					'<p class="notification__desc">' + this.desc + '</p>' +
-				'</div>' +
-				'<span class="notification__close notificationCloseJS"></span>' +
-			'</div>';
-
 		Notification.superclass.show.apply(this);
+
+		var notifications = this.parent.querySelectorAll('.notificationJS');
+
+		notifications[0].setAttribute('data-timer-id',this.timerHideNotification(this.duration));
 	},
 
 	hide: function (elem, timerID) {
@@ -38,11 +19,41 @@ Notification.prototype = {
 		Notification.superclass.hide.apply(this);
 	},
 
-	setActions: function () {
-		var notificationWrap = document.querySelector('.notificationsJS');
+	timerHideNotification: function (duration) {
+		return setTimeout(function () {
+			var notifications = this.parent.querySelectorAll('.notificationJS');
 
-		notificationWrap.addEventListener('click' , function (e) {
+			notifications[notifications.length - 1].remove();
+		}.bind(this), duration);
+	},
+
+	render: function (conf) {
+		this.html = '' +
+			'<div class="notification notificationJS">' +
+				'<div class="notification__icon">' +
+					'<img src="img/' + conf.icon + '.svg" alt="icon">' +
+				'</div>' +
+				'<div class="notification__content">' +
+					'<span class="notification__title notification__title_' + conf.type + '">' + conf.title + '</span>' +
+					'<p class="notification__desc">' + conf.desc + '</p>' +
+				'</div>' +
+				'<span class="notification__close notificationCloseJS"></span>' +
+			'</div>';
+
+		this.show();
+	},
+
+	setActions: function (conf, duration) {
+		document.body.insertAdjacentHTML('beforeend', '<div class="notifications notificationsJS"></div>');
+
+		this.parent = document.querySelector('.notificationsJS');
+
+		this.duration = duration;
+
+		document.body.addEventListener('click' , function (e) {
 			var target = e.target;
+
+			target.classList.contains('notificationOpenJS') && this.render(target.dataset.type ? conf[target.dataset.type] : conf);
 
 			target.classList.contains('notificationCloseJS') && this.hide(target.parentElement, target.parentElement.dataset.timerId);
 

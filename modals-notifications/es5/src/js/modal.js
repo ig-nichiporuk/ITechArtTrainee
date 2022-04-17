@@ -1,24 +1,9 @@
-function Modal(conf, parentBlock) {
-	Parent.prototype.constructor.apply(this, arguments);
-}
+function Modal() {}
 
 extend (Modal, Parent);
 
 Modal.prototype = {
 	show: function () {
-		this.html = '' +
-			'<div class="overlay overlayJS"></div>' +
-			'<div class="modal modalWrapJS">' +
-				'<div class="modal__wrap">' +
-					'<div class="modal__main">' +
-						'<img class="modal__icon" src="img/' + this.icon + '.svg" alt="modal-icon">' +
-						'<span class="modal__title">' + this.title + '</span>' +
-						'<p class="modal__desc">' + this.desc + '</p>'  +
-					'</div>' +
-					'<span class="modal__close btn-style btn-style_gray modalCloseJS">Закрыть</span>' +
-				'</div>' +
-			'</div>';
-
 		Modal.superclass.show.apply(this);
 
 		document.body.classList.add('modal-open');
@@ -36,11 +21,34 @@ Modal.prototype = {
 		document.body.classList.remove('modal-open');
 	},
 
-	setActions: function () {
-		var modalWrap = document.querySelector('.modalJs');
+	render: function (conf) {
+		document.body.insertAdjacentHTML('beforeend', '<div class="modal-container modalJs"></div>');
 
-		modalWrap.addEventListener('click' , function (e) {
+		this.html = '' +
+			'<div class="overlay overlayJS"></div>' +
+			'<div class="modal modalWrapJS">' +
+				'<div class="modal__wrap">' +
+					'<div class="modal__main">' +
+						'<img class="modal__icon" src="img/' + conf.icon + '.svg" alt="modal-icon">' +
+						'<span class="modal__title">' + conf.title + '</span>' +
+						'<p class="modal__desc">' + conf.desc + '</p>'  +
+					'</div>' +
+					'<span class="modal__close btn-style btn-style_gray modalCloseJS">Закрыть</span>' +
+				'</div>' +
+			'</div>';
+
+		this.show();
+	},
+
+	setActions: function (conf) {
+		document.body.insertAdjacentHTML('beforeend', '<div class="modal-container modalJs"></div>');
+
+		this.parent = document.querySelector('.modalJs');
+
+		document.body.addEventListener('click' , function (e) {
 			var target = e.target;
+
+			target.classList.contains('modalOpenJS') && this.render(conf);
 
 			if (target.classList.contains('overlayJS') || target.classList.contains('modalCloseJS')) {
 

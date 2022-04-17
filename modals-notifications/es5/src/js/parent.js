@@ -1,9 +1,4 @@
-function Parent(conf, parentBlock) {
-	this.title = conf.title;
-	this.desc = conf.desc;
-	this.icon = conf.icon;
-	this.parent = parentBlock;
-}
+function Parent() {}
 
 Parent.prototype = {
 	constructor: Parent,
