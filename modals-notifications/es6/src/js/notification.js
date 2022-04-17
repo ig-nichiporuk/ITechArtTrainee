@@ -1,26 +1,57 @@
-import Component from './component';
+import Parent from './parent';
 
 import notificationTemplate from '../templates/notificationTamplate.hbs';
+import notificationWrapTemplate from '../templates/notificationWrapTemplate.hbs';
 
-class Notification extends Component {
-	constructor(conf) {
-		super(conf);
+const body = document.body;
 
-		this.type = conf.type;
-		this.parent = document.querySelector('.notificationsJS');
-		this.html = notificationTemplate(conf);
-	}
-
+class Notification extends Parent {
 	show() {
-		const newElement  = document.createElement('div'),
-			notificationsWrap = document.querySelector('.notificationsJS');
+		super.show();
 
-		newElement.insertAdjacentHTML('afterbegin', this.html);
+		const notifications = this.parent.querySelectorAll('.notificationJS');
 
-		notificationsWrap.insertAdjacentElement('afterbegin', newElement);
+		notifications[0].setAttribute('data-timer-id',this.timerHideNotification(this.duration));
+	};
 
-		setTimeout( () => newElement.remove(), 5000);
-	}
+	hide(elem, timerID) {
+		this.elem = elem;
+
+		clearTimeout(timerID);
+
+		super.hide();
+	};
+
+	timerHideNotification(duration) {
+		return setTimeout(() => {
+			const notifications = this.parent.querySelectorAll('.notificationJS');
+
+			notifications[notifications.length - 1].remove();
+		}, duration);
+	};
+
+	render(conf) {
+		this.html = notificationTemplate(conf);
+
+		this.show();
+	};
+
+	setActions(conf, duration) {
+		body.insertAdjacentHTML('beforeend', notificationWrapTemplate());
+
+		this.parent = document.querySelector('.notificationsJS');
+
+		this.duration = duration;
+
+		body.addEventListener('click' , e => {
+			const target = e.target;
+
+			target.classList.contains('notificationOpenJS') && this.render(target.dataset.type ? conf[target.dataset.type] : conf);
+
+			target.classList.contains('notificationCloseJS') && this.hide(target.parentElement, target.parentElement.dataset.timerId);
+
+		});
+	};
 }
 
 export default Notification;

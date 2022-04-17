@@ -1,8 +1,10 @@
-<div class="notification__icon">
-	<svg><use xlink:href="#{{this.icon}}"></use></svg>
+<div class="notification notificationJS">
+	<div class="notification__icon">
+		<svg><use xlink:href="#{{this.icon}}"></use></svg>
+	</div>
+	<div class="notification__content">
+		<span class="notification__title notification__title_{{this.type}}">{{this.title}}</span>
+		<p class="notification__desc">{{this.desc}}</p>
+	</div>
+	<span class="notification__close notificationCloseJS"></span>
 </div>
-<div class="notification__content">
-	<span class="notification__title notification__title_{{this.type}}">{{this.title}}</span>
-	<p class="notification__desc">{{this.desc}}</p>
-</div>
-<span class="notification__close notificationCloseJS"></span>

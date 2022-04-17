@@ -2,35 +2,18 @@ import '../styles/style';
 
 import Modal from './modal';
 import Notification from './notification';
-import {modalConfig, notificationsConfig} from "./config";
 
+const notificationConf = {
+		'error': {type: 'error', title: 'Error', desc: 'Something is wrong', icon: 'error-icon'},
+		'success': {type: 'success', title: 'Success', desc: 'Everything is fine', icon: 'success-icon'},
+		'warning': {type: 'warning', title: 'Warning', desc: 'You must be careful', icon: 'warning-icon'},
+		'info': {type: 'info', title: 'Info', desc: 'Useful information for you', icon: 'info-icon'},
+	},
 
-const app = document.getElementById('app');
+	modalConf = {type: 'info', title: 'Info', desc: 'Useful information for you', icon: 'info-icon'},
 
-let modalInfo, notification;
+	notification = new Notification(),
+	modal = new Modal();
 
-app.addEventListener('click', e => {
-	const target = e.target;
-
-	if (target.classList.contains('modalOpenJS')) {
-		e.preventDefault();
-
-		modalInfo = new Modal(modalConfig[Math.floor(Math.random() * modalConfig.length)]);
-
-		modalInfo.show();
-	}
-
-	target.classList.contains('modalCloseJS') && modalInfo.hide(target);
-
-	target.classList.contains('overlayJS') && modalInfo.hide();
-
-	if (target.classList.contains('notificationOpenJS')) {
-		const notificationType = notificationsConfig.find(item => item.type === target.dataset.type);
-
-		notification = new Notification(notificationType);
-
-		notification.show();
-	}
-
-	target.classList.contains('notificationCloseJS') && notification.hide(target)
-});
+notification.setActions(notificationConf, 5000);
+modal.setActions(modalConf);

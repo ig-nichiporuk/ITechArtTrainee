@@ -1,43 +1,53 @@
-import Component from './component';
+import Component from './parent';
 
+import modalWrapTemplate from '../templates/modalWrapTemplate.hbs';
 import modalTemplate from '../templates/modalTemplate.hbs';
-import overlayTemplate from '../templates/overlayTemplate.hbs';
+
+const body = document.body;
 
 class Modal extends Component {
-	constructor(conf) {
-		super(conf);
-
-		this.parent = document.querySelector('.modalJs');
-		this.html = modalTemplate(conf);
-	}
-
 	show() {
 		super.show();
 
-		const winScrollTop = window.scrollY,
-			winHeight = document.documentElement.clientHeight;
-
-		this.parent.insertAdjacentHTML('beforebegin', overlayTemplate());
-
-		let modalHeight = this.parent.clientHeight,
-			modalTop = winScrollTop + (winHeight - modalHeight) / 2;
-
-		document.body.classList.add('modal-open');
-
-		this.parent.style.cssText = `top:${modalTop}px`;
-	}
+		body.classList.add('modal-open');
+	};
 
 	hide(elem) {
-		elem ? super.hide(elem) : this.parent.innerHTML = '';
+		const overlay = body.getElementsByClassName('overlayJS')[0];
 
-		const overlay = document.body.getElementsByClassName('overlayJS')[0];
+		this.elem = elem;
 
-		overlay && overlay.remove();
+		super.hide();
 
-		document.body.classList.remove('modal-open');
+		overlay.remove();
 
-	}
+		body.classList.remove('modal-open');
+	};
+
+	render(conf) {
+		this.html = modalTemplate(conf);
+
+		this.show();
+	};
+
+	setActions(conf) {
+		body.insertAdjacentHTML('beforeend', modalWrapTemplate());
+
+		this.parent = document.querySelector('.modalJs');
+
+		body.addEventListener('click' , e => {
+			const target = e.target;
+
+			target.classList.contains('modalOpenJS') && this.render(conf);
+
+			if (target.classList.contains('overlayJS') || target.classList.contains('modalCloseJS')) {
+
+				const modal = document.querySelector('.modalWrapJS');
+
+				this.hide(modal);
+			}
+		});
+	};
 }
-
 
 export default Modal;
