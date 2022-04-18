@@ -1,10 +1,21 @@
 class Parent {
+	constructor(config) {
+		this.config = config;
+	}
 	show() {
-		this.parent.insertAdjacentHTML('afterbegin', this.html);
+		if(this.parent) {
+			this.parent.insertAdjacentHTML('afterbegin', this.html);
+
+			this.afterRender();
+		}
 	}
 
 	hide() {
-		this.elem.remove();
+		return this.elem ? this.elem.remove() : '';
+	}
+
+	afterRender() {
+		return;
 	}
 }
 

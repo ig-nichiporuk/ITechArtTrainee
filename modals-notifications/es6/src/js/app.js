@@ -3,17 +3,27 @@ import '../styles/style';
 import Modal from './modal';
 import Notification from './notification';
 
-const notificationConf = {
-		'error': {type: 'error', title: 'Error', desc: 'Something is wrong', icon: 'error-icon'},
-		'success': {type: 'success', title: 'Success', desc: 'Everything is fine', icon: 'success-icon'},
-		'warning': {type: 'warning', title: 'Warning', desc: 'You must be careful', icon: 'warning-icon'},
-		'info': {type: 'info', title: 'Info', desc: 'Useful information for you', icon: 'info-icon'},
-	},
+document.body.addEventListener('click', e => {
+	const target = e.target;
 
-	modalConf = {type: 'info', title: 'Info', desc: 'Useful information for you', icon: 'info-icon'},
+	if(target.classList.contains('notificationOpenJS')) {
+		switch (target.dataset.type) {
+			case 'success':
+				new Notification({type: 'success', title: 'Success', desc: 'Everything is fine', icon: 'success-icon'}, 5000).show();
+				break;
+			case 'warning':
+				new Notification({type: 'warning', title: 'Warning', desc: 'You must be careful', icon: 'warning-icon'}, 5000).show();
+				break;
+			case 'error':
+				new Notification({type: 'error', title: 'Error', desc: 'Something is wrong', icon: 'error-icon'}, 5000).show();
+				break;
+			case 'info':
+				new Notification({type: 'info', title: 'Info', desc: 'Useful information for you', icon: 'info-icon'}, 5000).show();
+				break;
+		}
+	}
 
-	notification = new Notification(),
-	modal = new Modal();
-
-notification.setActions(notificationConf, 5000);
-modal.setActions(modalConf);
+	if(target.classList.contains('modalOpenJS')) {
+		new Modal({type: 'info', title: 'Info', desc: 'Useful information for you', icon: 'info-icon'}).show();
+	}
+});

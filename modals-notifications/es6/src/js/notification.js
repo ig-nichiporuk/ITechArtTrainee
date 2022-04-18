@@ -1,11 +1,16 @@
 import Parent from './parent';
 
 import notificationTemplate from '../templates/notificationTamplate.hbs';
-import notificationWrapTemplate from '../templates/notificationWrapTemplate.hbs';
-
-const body = document.body;
 
 class Notification extends Parent {
+	constructor(config, duration) {
+		super(config);
+
+		this.parent = document.querySelector('.notificationsJS');
+		this.duration = duration;
+		this.html = notificationTemplate(this.config);
+	}
+
 	show() {
 		super.show();
 
@@ -30,28 +35,14 @@ class Notification extends Parent {
 		}, duration);
 	};
 
-	render(conf) {
-		this.html = notificationTemplate(conf);
-
-		this.show();
-	};
-
-	setActions(conf, duration) {
-		body.insertAdjacentHTML('beforeend', notificationWrapTemplate());
-
-		this.parent = document.querySelector('.notificationsJS');
-
-		this.duration = duration;
-
-		body.addEventListener('click' , e => {
+	afterRender() {
+		document.body.addEventListener('click' , e => {
 			const target = e.target;
-
-			target.classList.contains('notificationOpenJS') && this.render(target.dataset.type ? conf[target.dataset.type] : conf);
 
 			target.classList.contains('notificationCloseJS') && this.hide(target.parentElement, target.parentElement.dataset.timerId);
 
 		});
-	};
+	}
 }
 
 export default Notification;
