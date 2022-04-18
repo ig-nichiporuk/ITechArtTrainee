@@ -22,3 +22,7 @@ document.body.addEventListener('click', function(e) {
 		new Modal({type: 'info', title: 'Info', desc: 'Useful information for you', icon: 'info-icon'}).show();
 	};
 });
+
+
+new Parent().show();
+new Parent().hide();
