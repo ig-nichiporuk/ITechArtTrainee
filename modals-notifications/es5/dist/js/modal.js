@@ -35,19 +35,16 @@ Modal.prototype = {
 				'</div>' +
 			'</div>';
 
-		this.show();
+		this.afterRender();
 	},
 
-	setActions: function (conf) {
-		document.body.insertAdjacentHTML('beforeend', '<div class="modal-container modalJs"></div>');
-
+	afterRender: function () {
 		this.parent = document.querySelector('.modalJs');
+
+		this.show();
 
 		document.body.addEventListener('click' , function (e) {
 			var target = e.target;
-
-			target.classList.contains('modalOpenJS') && this.render(conf);
-
 			if (target.classList.contains('overlayJS') || target.classList.contains('modalCloseJS')) {
 
 				var modal = document.querySelector('.modalWrapJS');

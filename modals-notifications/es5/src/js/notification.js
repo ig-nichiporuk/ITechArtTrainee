@@ -27,7 +27,7 @@ Notification.prototype = {
 		}.bind(this), duration);
 	},
 
-	render: function (conf) {
+	render: function (conf, duration) {
 		this.html = '' +
 			'<div class="notification notificationJS">' +
 				'<div class="notification__icon">' +
@@ -40,23 +40,22 @@ Notification.prototype = {
 				'<span class="notification__close notificationCloseJS"></span>' +
 			'</div>';
 
-		this.show();
+		this.afterRender(duration);
 	},
 
-	setActions: function (conf, duration) {
-		document.body.insertAdjacentHTML('beforeend', '<div class="notifications notificationsJS"></div>');
-
+	afterRender: function (duration) {
 		this.parent = document.querySelector('.notificationsJS');
 
 		this.duration = duration;
 
+		this.show();
+
 		document.body.addEventListener('click' , function (e) {
 			var target = e.target;
-
-			target.classList.contains('notificationOpenJS') && this.render(target.dataset.type ? conf[target.dataset.type] : conf);
 
 			target.classList.contains('notificationCloseJS') && this.hide(target.parentElement, target.parentElement.dataset.timerId);
 
 		}.bind(this));
+
 	}
 }
