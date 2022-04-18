@@ -1,13 +1,26 @@
-function Parent() {}
+function Parent(config) {
+	this.config = config;
+}
 
 Parent.prototype = {
 	constructor: Parent,
 
 	show: function () {
-		this.parent.insertAdjacentHTML('afterbegin', this.html);
+		if(this.parent) {
+			this.parent.insertAdjacentHTML('afterbegin', this.html);
+
+			this.afterRender();
+		} else {
+			return;
+		};
 	},
 
 	hide: function () {
-		this.elem.remove();
+		return this.elem ? this.elem.remove() : '';
+	},
+
+	afterRender: function () {
+		return;
 	}
+
 }
