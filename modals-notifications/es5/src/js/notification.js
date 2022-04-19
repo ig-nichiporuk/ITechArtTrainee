@@ -1,6 +1,9 @@
 function Notification(config, duration) {
 	Parent.prototype.constructor.apply(this, arguments);
 
+	this.parent = Parent.prototype._creatParentWrap('notifications');
+
+	this.test = this.prototype;
 	this.duration = duration;
 	this.html = '' +
 			'<div class="notification notificationJS">' +
@@ -13,37 +16,25 @@ function Notification(config, duration) {
 				'</div>' +
 				'<span class="notification__close notificationCloseJS"></span>' +
 			'</div>';
-
 }
 
 extend(Notification, Parent);
 
 Notification.prototype = {
 	show: function () {
-		var parentWarp = document.querySelector('.notificationsJS');
-
-		if(parentWarp) {
-			this.parent = parentWarp;
-
-		} else {
-			this.parent.setAttribute('class', 'notifications notificationsJS');
-
-			document.body.insertAdjacentElement('beforeend', this.parent);
-		}
-
 		Notification.superclass.show.apply(this);
 
 		var notifications = this.parent.querySelectorAll('.notificationJS');
 
-		notifications[0].setAttribute('data-timer-id',this._timerHideNotification(this.duration));
+		// notifications[0].setAttribute('data-timer-id',this._timerHideNotification(this.duration));
 	},
 
-	_hide: function () {
+	hide: function () {
 		this.elem = event.target.parentElement;
 
 		clearTimeout(event.target.parentElement.dataset.timerId);
 
-		Notification.superclass._hide.apply(this);
+		Notification.superclass.hide.apply(this);
 	},
 
 	_timerHideNotification: function (duration) {
@@ -55,8 +46,6 @@ Notification.prototype = {
 	},
 
 	_afterRender: function () {
-		document.body.onclick = function () {
-			event.target.classList.contains('notificationCloseJS') && this._hide();
-		}.bind(this);
+		Notification.superclass._afterRender.apply(this);
 	}
 }

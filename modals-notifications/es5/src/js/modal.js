@@ -1,6 +1,7 @@
 function Modal(config) {
 	Parent.prototype.constructor.apply(this, arguments);
 
+	this.parent = Parent.prototype._creatParentWrap('modals');
 	this.html = '' +
 		'<div class="overlay overlayJS"></div>' +
 		'<div class="modal modalWrapJS">' +
@@ -19,27 +20,17 @@ extend (Modal, Parent);
 
 Modal.prototype = {
 	show: function () {
-		var parentWarp = document.querySelector('.modalJs');
-
-		if(parentWarp) {
-			this.parent = parentWarp;
-
-		} else {
-			this.parent.setAttribute('class', 'modal-container modalJs');
-
-			document.body.insertAdjacentElement('beforeend', this.parent);
-		}
 		Modal.superclass.show.apply(this);
 
 		document.body.classList.add('modal-open');
 	},
 
-	_hide: function () {
+	hide: function () {
 		var overlay = document.body.getElementsByClassName('overlayJS')[0];
 
 		this.elem = document.querySelector('.modalWrapJS');
 
-		Modal.superclass._hide.apply(this);
+		Modal.superclass.hide.apply(this);
 
 		overlay.remove();
 
@@ -47,11 +38,7 @@ Modal.prototype = {
 	},
 
 	_afterRender: function () {
-		document.body.onclick = function () {
-			if (event.target.classList.contains('overlayJS') || event.target.classList.contains('modalCloseJS')) {
-				this._hide();
-			}
-		}.bind(this);
+		Modal.superclass._afterRender.apply(this);
 	}
 };
 

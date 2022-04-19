@@ -22,3 +22,5 @@ document.body.addEventListener('click', function(e) {
 		new Modal({type: 'info', title: 'Info', desc: 'Useful information for you', icon: 'info-icon'}).show();
 	};
 });
+
+console.log(new Notification({type: 'success', title: 'Success', desc: 'Everything is fine', icon: 'success-icon'}, 5000));
