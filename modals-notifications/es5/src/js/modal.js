@@ -34,22 +34,22 @@ Modal.prototype = {
 		document.body.classList.add('modal-open');
 	},
 
-	hide: function () {
+	_hide: function () {
 		var overlay = document.body.getElementsByClassName('overlayJS')[0];
 
 		this.elem = document.querySelector('.modalWrapJS');
 
-		Modal.superclass.hide.apply(this);
+		Modal.superclass._hide.apply(this);
 
 		overlay.remove();
 
 		document.body.classList.remove('modal-open');
 	},
 
-	afterRender: function () {
+	_afterRender: function () {
 		document.body.onclick = function () {
 			if (event.target.classList.contains('overlayJS') || event.target.classList.contains('modalCloseJS')) {
-				this.hide();
+				this._hide();
 			}
 		}.bind(this);
 	}

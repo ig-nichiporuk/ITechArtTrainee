@@ -35,18 +35,18 @@ Notification.prototype = {
 
 		var notifications = this.parent.querySelectorAll('.notificationJS');
 
-		notifications[0].setAttribute('data-timer-id',this.timerHideNotification(this.duration));
+		notifications[0].setAttribute('data-timer-id',this._timerHideNotification(this.duration));
 	},
 
-	hide: function () {
+	_hide: function () {
 		this.elem = event.target.parentElement;
 
 		clearTimeout(event.target.parentElement.dataset.timerId);
 
-		Notification.superclass.hide.apply(this);
+		Notification.superclass._hide.apply(this);
 	},
 
-	timerHideNotification: function (duration) {
+	_timerHideNotification: function (duration) {
 		return setTimeout(function () {
 			var notifications = this.parent.querySelectorAll('.notificationJS');
 
@@ -54,9 +54,9 @@ Notification.prototype = {
 		}.bind(this), duration);
 	},
 
-	afterRender: function () {
+	_afterRender: function () {
 		document.body.onclick = function () {
-			event.target.classList.contains('notificationCloseJS') && this.hide();
+			event.target.classList.contains('notificationCloseJS') && this._hide();
 		}.bind(this);
 	}
 }

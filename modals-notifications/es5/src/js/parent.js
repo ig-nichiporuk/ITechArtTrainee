@@ -10,14 +10,14 @@ Parent.prototype = {
 	show: function () {
 		this.parent.insertAdjacentHTML('afterbegin', this.html);
 
-		this.afterRender()
+		this._afterRender()
 	},
 
-	hide: function () {
+	_hide: function () {
 		this.elem.remove();
 	},
 
-	afterRender: function () {
+	_afterRender: function () {
 		return;
 	}
 }
