@@ -6,39 +6,45 @@ class Modal extends Component {
 	constructor(config) {
 		super(config);
 
-		this.parent = document.querySelector('.modalJs');
 		this.html = modalTemplate(this.config);
 	}
 
 	show() {
+		const parentWarp = document.querySelector('.modalJs');
+
+		if(parentWarp) {
+			this.parent = parentWarp;
+
+		} else {
+			this.parent.setAttribute('class', 'modal-container modalJs');
+
+			document.body.insertAdjacentElement('beforeend', this.parent);
+		}
+
 		super.show();
 
 		document.body.classList.add('modal-open');
 	};
 
-	hide(elem) {
+	_hide() {
 		const overlay = document.body.getElementsByClassName('overlayJS')[0];
 
-		this.elem = elem;
+		this.elem = document.querySelector('.modalWrapJS');
 
-		super.hide();
+		super._hide();
 
-		overlay && overlay.remove();
+		overlay.remove();
 
 		document.body.classList.remove('modal-open');
 	};
 
-	afterRender() {
-		document.body.addEventListener('click' , e => {
-			const target = e.target;
-			if (target.classList.contains('overlayJS') || target.classList.contains('modalCloseJS')) {
-
-				const modal = document.querySelector('.modalWrapJS');
-
-				this.hide(modal);
+	_afterRender() {
+		document.body.onclick = () => {
+			if (event.target.classList.contains('overlayJS') || event.target.classList.contains('modalCloseJS')) {
+				this._hide();
 			}
-		});
-	}
+		}
+	};
 }
 
 export default Modal;
