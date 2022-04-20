@@ -1,0 +1,89 @@
+.notifications {
+    position: fixed;
+    right: 24px;
+    top: 24px;
+    width: 260px;
+}
+
+.notification {
+    display: none;
+    position: relative;
+    background-color: #fff;
+    border-radius: 6px;
+    padding: 16px 24px 16px 16px;
+    border: 1px solid #ddd;
+    animation-duration: .3s;
+    animation-name: notificationSlide;
+    &.show {
+        display: flex;
+    }
+    & + & {
+        margin: 8px 0 0;
+    }
+
+    &__icon {
+        width: 30px;
+        height: 30px;
+        img {
+            display: block;
+            width: inherit;
+            height: inherit;
+            object-fit: cover;
+        }
+    }
+
+    &__content {
+        margin: 0 0 0 16px;
+    }
+
+    &__title,
+    &__desc {
+        display: block;
+    }
+
+    &__title {
+        font-size: 16px;
+        line-height: 19px;
+        font-weight: 500;
+        &_error {
+            color: #e2001a;
+        }
+        &_success {
+            color: #7AC600;
+        }
+        &_warning {
+            color: #FEC023;
+        }
+        &_info {
+            color: #0FAE2A;
+        }
+    }
+
+    &__desc {
+        font-size: 14px;
+        line-height: 17px;
+    }
+
+    &__close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 24px;
+        height: 24px;
+        background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M24.1818 25C24 25 23.6364 25 23.4545 24.8174L5.27273 6.55251C4.90909 6.18721 4.90909 5.63927 5.27273 5.27397C5.63636 4.90868 6.18182 4.90868 6.54545 5.27397L24.7273 23.5388C25.0909 23.9041 25.0909 24.4521 24.7273 24.8174C24.7273 25 24.3636 25 24.1818 25Z' fill='%23303030'/%3E%3Cpath d='M6 25C5.81818 25 5.45455 25 5.27273 24.8174C4.90909 24.4521 4.90909 23.9041 5.27273 23.5388L23.4545 5.27397C23.8182 4.90868 24.3636 4.90868 24.7273 5.27397C25.0909 5.63927 25.0909 6.18721 24.7273 6.55251L6.54545 24.8174C6.54545 25 6.18182 25 6 25Z' fill='%23303030'/%3E%3C/svg%3E%0A");
+        background-repeat: no-repeat;
+        background-size: 14px 14px;
+        background-position: 50% 50%;
+        cursor: pointer;
+    }
+}
+
+@keyframes notificationSlide {
+    from {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
