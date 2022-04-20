@@ -1,3 +1,22 @@
+.modals {
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+    &.show {
+        opacity: 1;
+        visibility: visible;
+        overflow: visible;
+        z-index: auto;
+        pointer-events: all;
+    }
+}
+
 .modal {
     display: block;
     position: relative;
@@ -11,7 +30,7 @@
     transition: opacity .7s;
     visibility: hidden;
     overflow: hidden;
-    .modal-open & {
+    .modals.show & {
         opacity: 1;
         visibility: visible;
         position: relative;
@@ -19,22 +38,6 @@
         transform: translate3d(0, -50%, 0);
         animation-duration: .3s;
         animation-name: modalSlide;
-    }
-    &-container {
-        position: absolute;
-        left: 0;
-        top: 0;
-        display: block;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        visibility: hidden;
-        .modal-open & {
-            visibility: visible;
-            overflow: visible;
-            z-index: auto;
-            pointer-events: all;
-        }
     }
     &__wrap {
         position: relative;
@@ -75,6 +78,22 @@
     }
 }
 
+.overlay {
+    position: fixed;
+    z-index: 9;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background: rgba(23, 35, 69, .55);
+}
+
+.modals.show .overlay{
+    display: block;
+}
+
 @keyframes modalSlide {
     from {
         opacity: 0;
@@ -91,7 +110,7 @@
 @media (max-width: 639px) {
     .modal {
         transition: none;
-        .modal-open &{
+        .modals.show &{
             position: fixed;
             top: 0 !important;
             width: 100vw;

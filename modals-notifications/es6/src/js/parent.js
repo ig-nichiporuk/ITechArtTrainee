@@ -5,19 +5,30 @@ class Parent {
 		this.elem = document.createElement('div');
 	}
 	show() {
-		if(this.parent) {
-			this.parent.insertAdjacentHTML('afterbegin', this.html);
+		this.parent.classList.add('show');
 
-			this._afterRender();
-		}
+		this._afterRender();
 	}
 
-	_hide() {
-		return this.elem ? this.elem.remove() : '';
+	hide() {
+		this.parent.classList.remove('show');
+	}
+
+	_render() {
+		this.parent.innerHTML = this.html;
 	}
 
 	_afterRender() {
-		return;
+		document.body.onclick = () => {
+
+			const validCloseClasses = ['notificationCloseJS', 'overlayJS', 'modalCloseJS'];
+
+			if([...event.target.classList].some(className => validCloseClasses.includes(className))) {
+				this.parent = event.target.closest('.show');
+
+				this.hide();
+			}
+		};
 	}
 }
 

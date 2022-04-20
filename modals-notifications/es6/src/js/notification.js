@@ -3,51 +3,26 @@ import Parent from './parent';
 import notificationTemplate from '../templates/notificationTamplate.hbs';
 
 class Notification extends Parent {
-	constructor(config, duration) {
-		super(config);
+	constructor(parent, config, duration) {
+		super(parent, config);
 
+		this.parent = parent;
+		this.config = config;
 		this.duration = duration;
 		this.html = notificationTemplate(this.config);
+
+		this._render();
+		this.parent.setAttribute('data-timer-id',this._timerHideNotification(this.duration));
 	}
 
-	show() {
-		const parentWarp = document.querySelector('.notificationsJS');
+	hide() {
+		super.hide();
 
-		if(parentWarp) {
-			this.parent = parentWarp;
-
-		} else {
-			this.parent.setAttribute('class', 'notifications notificationsJS');
-
-			document.body.insertAdjacentElement('beforeend', this.parent);
-		}
-
-		super.show();
-
-		const notifications = this.parent.querySelectorAll('.notificationJS');
-
-		notifications[0].setAttribute('data-timer-id',this._timerHideNotification(this.duration));
+		clearTimeout(this.parent.dataset.timerId);
 	};
-
-	_hide() {
-		this.elem = event.target.parentElement;
-
-		clearTimeout(event.target.parentElement.dataset.timerId);
-
-		super._hide();
-	};
-
 	_timerHideNotification(duration) {
-		return setTimeout(() => {
-			const notifications = this.parent.querySelectorAll('.notificationJS');
-
-			notifications[notifications.length - 1].remove();
-		}, duration);
+		return setTimeout(() => this.parent.classList.remove('show'), duration);
 	};
-
-	_afterRender() {
-		document.body.onclick = () => event.target.classList.contains('notificationCloseJS') && this._hide();
-	}
 }
 
 export default Notification;

@@ -6,14 +6,17 @@
 }
 
 .notification {
+    display: none;
     position: relative;
-    display: flex;
     background-color: #fff;
     border-radius: 6px;
     padding: 16px 24px 16px 16px;
     border: 1px solid #ddd;
     animation-duration: .3s;
     animation-name: notificationSlide;
+    &.show {
+        display: flex;
+    }
     & + & {
         margin: 8px 0 0;
     }
