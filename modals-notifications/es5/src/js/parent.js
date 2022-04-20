@@ -4,43 +4,31 @@ function Parent(config) {
 	this.parent = document.createElement('div');
 }
 
-Parent.prototype = {
-	constructor: Parent,
+Parent.prototype.constructor = Parent,
 
-	show: function () {
-		this.parent.insertAdjacentHTML('afterbegin', this.html);
+Parent.prototype.show = function () {
+	this.parent.classList.add('show');
 
-		this._afterRender();
-	},
+	this._afterRender();
+};
 
-	hide: function () {
-		this.elem.remove();
-	},
+Parent.prototype.hide = function () {
+	this.parent.classList.remove('show');
+};
 
-	_afterRender: function () {
-		document.body.onclick = function () {
-			if(event.target.classList.contains('notificationCloseJS') ||
-				event.target.classList.contains('overlayJS') ||
-				event.target.classList.contains('modalCloseJS')) {
-					this.hide();
-			}
-		}.bind(this);
-	},
-
-	_creatParentWrap: function (selector) {
-		var parentWarp = document.querySelector('.' + selector);
-
-		if(parentWarp) {
-			return parentWarp;
-
-		} else {
-			this.parent = document.createElement('div');
-
-			this.parent.setAttribute('class', selector + ' ' + selector + 'JS');
-
-			document.body.insertAdjacentElement('beforeend', this.parent);
-
-			return this.parent;
-		}
-	}
+Parent.prototype._render = function () {
+	this.parent.innerHTML = this.html;
 }
+
+Parent.prototype._afterRender = function () {
+	document.body.onclick = function () {
+		if(event.target.classList.contains('notificationCloseJS') ||
+			event.target.classList.contains('overlayJS') ||
+			event.target.classList.contains('modalCloseJS')) {
+				this.parent = event.target.closest('.show');
+
+				this.hide();
+		}
+	}.bind(this);
+};
+

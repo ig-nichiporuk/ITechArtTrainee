@@ -1,7 +1,8 @@
-function Modal(config) {
+function Modal(parent,config) {
 	Parent.prototype.constructor.apply(this, arguments);
 
-	this.parent = Parent.prototype._creatParentWrap('modals');
+	this.parent = parent;
+	this.config = config;
 	this.html = '' +
 		'<div class="overlay overlayJS"></div>' +
 		'<div class="modal modalWrapJS">' +
@@ -13,35 +14,9 @@ function Modal(config) {
 				'</div>' +
 			'<span class="modal__close btn-style btn-style_gray modalCloseJS">Закрыть</span>' +
 			'</div>' +
-		'</div>'
+		'</div>';
+
+	this._render();
 }
 
 extend (Modal, Parent);
-
-Modal.prototype = {
-	show: function () {
-		Modal.superclass.show.apply(this);
-
-		document.body.classList.add('modal-open');
-	},
-
-	hide: function () {
-		var overlay = document.body.getElementsByClassName('overlayJS')[0];
-
-		this.elem = document.querySelector('.modalWrapJS');
-
-		Modal.superclass.hide.apply(this);
-
-		overlay.remove();
-
-		document.body.classList.remove('modal-open');
-	},
-
-	_afterRender: function () {
-		Modal.superclass._afterRender.apply(this);
-	}
-};
-
-
-
-
