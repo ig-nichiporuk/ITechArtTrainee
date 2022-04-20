@@ -3,7 +3,6 @@ function Notification(config, duration) {
 
 	this.parent = Parent.prototype._creatParentWrap('notifications');
 
-	this.test = this.prototype;
 	this.duration = duration;
 	this.html = '' +
 			'<div class="notification notificationJS">' +
@@ -26,7 +25,7 @@ Notification.prototype = {
 
 		var notifications = this.parent.querySelectorAll('.notificationJS');
 
-		// notifications[0].setAttribute('data-timer-id',this._timerHideNotification(this.duration));
+		notifications[0].setAttribute('data-timer-id',this._timerHideNotification(this.duration));
 	},
 
 	hide: function () {
